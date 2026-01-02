@@ -2,8 +2,8 @@
   "$schema": "https://schemas.runtipi.io/v2/app-info.json",
   "name": "Home Assistant",
   "min_tipi_version": "4.5.0",
-  "port": 8209,
-  "tipi_version": 1,
+  "port": 8123,
+  "tipi_version": 2,
   "available": true,
   "exposable": true,
   "dynamic_config": true,
@@ -17,5 +17,5 @@
   "form_fields": [],
   "supported_architectures": ["arm64", "amd64"],
   "created_at": 1767314871903,
-  "updated_at": 1767314871903
+  "updated_at": 1767371530331
 }
