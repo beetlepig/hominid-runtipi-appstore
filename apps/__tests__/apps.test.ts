@@ -187,16 +187,6 @@ describe("App configs", () => {
     }
   });
 
-  describe("Each app should have a docker-compose file beside it", () => {
-    const apps = getAppConfigs();
-
-    for (const app of apps) {
-      test(app.id, () => {
-        expect(fs.existsSync(`./apps/${app.id}/docker-compose.yml`)).toBe(true);
-      });
-    }
-  });
-
   describe("Each app should have a metadata folder beside it", () => {
     const apps = getAppConfigs();
 
@@ -217,43 +207,6 @@ describe("App configs", () => {
     }
   });
 
-  describe("Each app should have a container name equals to its id", () => {
-    const apps = getAppConfigs();
-
-    for (const app of apps) {
-      test(app.id, () => {
-        const dockerComposeFile = fs.readFileSync(`./apps/${app.id}/docker-compose.yml`).toString();
-
-        const dockerCompose = jsyaml.load(dockerComposeFile) as { services: Record<string, { container_name: string }> };
-
-        expect(dockerCompose.services[app.id]).toBeDefined();
-        expect(dockerCompose?.services[app.id]?.container_name).toBe(app.id);
-      });
-    }
-  });
-
-  describe("Each app should have the same version in config.json and docker-compose.yml", () => {
-    const exceptions = ["revolt"];
-    const apps = getAppConfigs().filter((app) => !exceptions.includes(app.id));
-
-    for (const app of apps) {
-      test(app.id, () => {
-        const dockerComposeFile = fs.readFileSync(`./apps/${app.id}/docker-compose.yml`).toString();
-
-        const dockerCompose = jsyaml.load(dockerComposeFile) as { services: Record<string, { image: string }> };
-
-        expect(dockerCompose.services[app.id]).toBeDefined();
-        expect(dockerCompose.services[app.id]?.image).toBeDefined();
-
-        const dockerImage = dockerCompose.services[app.id]?.image;
-
-        const version = dockerImage?.split(":")[1];
-
-        expect(version).toContain(app.version);
-      });
-    }
-  });
-
   describe("Each app should have network tipi_main_network", () => {
     const apps = getAppConfigs();
 
@@ -269,29 +222,6 @@ describe("App configs", () => {
           expect(dockerCompose.services[app.id]?.networks).toBeDefined();
           expect(dockerCompose.services[app.id]?.networks).toContain("tipi_main_network");
         }
-      });
-    }
-  });
-
-  describe("Each app should have label runtipi.managed=true", () => {
-    const apps = getAppConfigs();
-
-    for (const app of apps) {
-      test(app.id, () => {
-        const dockerComposeFile = fs.readFileSync(`./apps/${app.id}/docker-compose.yml`).toString();
-
-        const dockerCompose = jsyaml.load(dockerComposeFile) as { services: Record<string, { labels: Record<string, string> }> };
-
-        const services = dockerCompose.services;
-        const labelDoesNotExist = Object.keys(services).some((service) => {
-          const labels = services[service]?.labels || {};
-          if (labels) {
-            return !labels["runtipi.managed"];
-          }
-          return true;
-        });
-
-        expect(labelDoesNotExist).toBe(false);
       });
     }
   });

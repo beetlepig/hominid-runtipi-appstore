@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 2,
+  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json",
+  "services": [
+    {
+      "name": "homeassistant",
+      "image": "ghcr.io/home-assistant/home-assistant:2025.12.5",
+      "isMain": true,
+      "internalPort": "8123",
+      "networkMode": "host",
+      "capAdd": ["NET_ADMIN", "NET_RAW"],
+      "environment": [
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "/etc/localtime",
+          "containerPath": "/etc/localtime",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/homeassistant/config",
+          "containerPath": "/config",
+          "readOnly": false
+        },
+        {
+          "hostPath": "/run/dbus",
+          "containerPath": "/run/dbus",
+          "readOnly": true
+        }
+      ],
+      "extraLabels": {
+        "traefik.enable": true,
+        "traefik.http.middlewares.homeassistant-web-redirect.redirectscheme.scheme": "https",
+        "traefik.http.services.homeassistant.loadbalancer.server.port": "8123",
+        "traefik.http.routers.homeassistant-insecure.rule": "Host(`${APP_DOMAIN}`)",
+        "traefik.http.routers.homeassistant-insecure.entrypoints": "web",
+        "traefik.http.routers.homeassistant-insecure.service": "homeassistant",
+        "traefik.http.routers.homeassistant-insecure.middlewares": "homeassistant-web-redirect",
+        "traefik.http.routers.homeassistant.rule": "Host(`${APP_DOMAIN}`)",
+        "traefik.http.routers.homeassistant.entrypoints": "websecure",
+        "traefik.http.routers.homeassistant.service": "homeassistant",
+        "traefik.http.routers.homeassistant.tls.certresolver": "myresolver",
+        "traefik.http.routers.homeassistant-local-insecure.rule": "Host(`homeassistant.${LOCAL_DOMAIN}`)",
+        "traefik.http.routers.homeassistant-local-insecure.entrypoints": "web",
+        "traefik.http.routers.homeassistant-local-insecure.service": "homeassistant",
+        "traefik.http.routers.homeassistant-local-insecure.middlewares": "homeassistant-web-redirect",
+        "traefik.http.routers.homeassistant-local.rule": "Host(`homeassistant.${LOCAL_DOMAIN}`)",
+        "traefik.http.routers.homeassistant-local.entrypoints": "websecure",
+        "traefik.http.routers.homeassistant-local.service": "homeassistant",
+        "traefik.http.routers.homeassistant-local.tls": true
+      },
+      "dependsOn": ["ha-matter-server"]
+    },
+    {
+      "name": "ha-matter-server",
+      "image": "ghcr.io/matter-js/python-matter-server:8.1.2",
+      "isMain": false,
+      "networkMode": "host",
+      "volumes": [
+        {
+          "hostPath": "/run/dbus",
+          "containerPath": "/run/dbus",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/matter",
+          "containerPath": "/data"
+        }
+      ],
+      "securityOpt": ["apparmor=unconfined"]
+    }
+  ]
+}
