@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 2,
+  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json",
+  "services": [
+    {
+      "name": "seafile",
+      "image": "seafileltd/seafile-mc:13.0.12",
+      "isMain": true,
+      "internalPort": "80",
+      "volumes": [
+        {
+          "containerPath": "/shared",
+          "hostPath": "${APP_DATA_DIR}/data/seafile-data"
+        }
+      ],
+      "environment": [
+        {
+          "key": "SEAFILE_MYSQL_DB_HOST",
+          "value": "seafile-mysql"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_PORT",
+          "value": "3306"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_USER",
+          "value": "seafile"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_PASSWORD",
+          "value": "${SEAFILE_DB_PASSWORD}"
+        },
+        {
+          "key": "INIT_SEAFILE_MYSQL_ROOT_PASSWORD",
+          "value": "${SEAFILE_DB_PASSWORD}"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_CCNET_DB_NAME",
+          "value": "ccnet_db"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_SEAFILE_DB_NAME",
+          "value": "seafile_db"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_SEAHUB_DB_NAME",
+          "value": "seahub_db"
+        },
+        {
+          "key": "TIME_ZONE",
+          "value": "${TZ}"
+        },
+        {
+          "key": "INIT_SEAFILE_ADMIN_EMAIL",
+          "value": "${SEAFILE_ADMIN_EMAIL}"
+        },
+        {
+          "key": "INIT_SEAFILE_ADMIN_PASSWORD",
+          "value": "${SEAFILE_ADMIN_PASSWORD}"
+        },
+        {
+          "key": "SEAFILE_SERVER_HOSTNAME",
+          "value": "${APP_DOMAIN}"
+        },
+        {
+          "key": "SEAFILE_SERVER_PROTOCOL",
+          "value": "https"
+        },
+        {
+          "key": "NON_ROOT",
+          "value": "false"
+        },
+        {
+          "key": "JWT_PRIVATE_KEY",
+          "value": "${JWT_PRIVATE_KEY}"
+        },
+        {
+          "key": "SEAFILE_LOG_TO_STDOUT",
+          "value": "false"
+        },
+        {
+          "key": "ENABLE_GO_FILESERVER",
+          "value": "true"
+        },
+        {
+          "key": "CACHE_PROVIDER",
+          "value": "redis"
+        },
+        {
+          "key": "REDIS_HOST",
+          "value": "seafile-redis"
+        },
+        {
+          "key": "REDIS_PORT",
+          "value": "6379"
+        },
+        {
+          "key": "REDIS_PASSWORD",
+          "value": "${SEAFILE_DB_PASSWORD}"
+        },
+        {
+          "key": "MD_FILE_COUNT_LIMIT",
+          "value": "100000"
+        }
+      ],
+      "healthCheck": {
+        "test": "curl -f http://localhost:80 || exit 1",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 3,
+        "startPeriod": "10s"
+      },
+      "dependsOn": {
+        "seafile-mysql": {
+          "condition": "service_healthy"
+        },
+        "seafile-redis": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "seafile-mysql",
+      "image": "mariadb:10.6.24",
+      "isMain": false,
+      "environment": [
+        {
+          "key": "MYSQL_ROOT_PASSWORD",
+          "value": "${SEAFILE_DB_PASSWORD}"
+        },
+        {
+          "key": "MARIADB_MYSQL_LOCALHOST_USER",
+          "value": "1"
+        },
+        {
+          "key": "MARIADB_MYSQL_LOCALHOST_GRANTS",
+          "value": "USAGE"
+        },
+        {
+          "key": "MYSQL_LOG_CONSOLE",
+          "value": "true"
+        },
+        {
+          "key": "MARIADB_AUTO_UPGRADE",
+          "value": "1"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/mysql",
+          "containerPath": "/var/lib/mysql"
+        }
+      ],
+      "healthCheck": {
+        "test": "healthcheck.sh --su-mysql --connect --mariadbupgrade --innodb_initialized",
+        "interval": "20s",
+        "startPeriod": "30s",
+        "timeout": "5s",
+        "retries": 10
+      }
+    },
+    {
+      "name": "seafile-redis",
+      "image": "redis:7.4.7",
+      "command": ["/bin/sh", "-c", "redis-server --requirepass \"${SEAFILE_DB_PASSWORD}\""],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/redis",
+          "containerPath": "/data"
+        }
+      ],
+      "environment": [
+        {
+          "key": "REDIS_PASSWORD",
+          "value": "${SEAFILE_DB_PASSWORD}"
+        }
+      ],
+      "healthCheck": {
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "test": "redis-cli ping"
+      }
+    }
+  ]
+}

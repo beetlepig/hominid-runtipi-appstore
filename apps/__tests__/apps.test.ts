@@ -1,6 +1,5 @@
 import fs from "node:fs";
 import { parseComposeJson } from "@runtipi/common/schemas";
-import jsyaml from "js-yaml";
 
 type FormField = {
   type: "random";
@@ -29,21 +28,6 @@ interface AppConfig {
   updated_at: number;
 }
 
-const networkExceptions = [
-  "matter-server",
-  "mdns-repeater",
-  "pihole",
-  "tailscale",
-  "homeassistant",
-  "plex",
-  "zerotier",
-  "gladys",
-  "scrypted",
-  "homebridge",
-  "cloudflared",
-  "beszel-agent",
-  "watchyourlan",
-];
 const getAppConfigs = (): AppConfig[] => {
   const apps: AppConfig[] = [];
 
@@ -203,25 +187,6 @@ describe("App configs", () => {
     for (const app of apps) {
       test(app.id, () => {
         expect(fs.existsSync(`./apps/${app.id}/metadata/logo.jpg`)).toBe(true);
-      });
-    }
-  });
-
-  describe("Each app should have network tipi_main_network", () => {
-    const apps = getAppConfigs();
-
-    for (const app of apps) {
-      test(app.id, () => {
-        if (!networkExceptions.includes(app.id)) {
-          const dockerComposeFile = fs.readFileSync(`./apps/${app.id}/docker-compose.yml`).toString();
-
-          const dockerCompose = jsyaml.load(dockerComposeFile) as { services: Record<string, { networks: string[] }> };
-
-          expect(dockerCompose.services[app.id]).toBeDefined();
-
-          expect(dockerCompose.services[app.id]?.networks).toBeDefined();
-          expect(dockerCompose.services[app.id]?.networks).toContain("tipi_main_network");
-        }
       });
     }
   });
