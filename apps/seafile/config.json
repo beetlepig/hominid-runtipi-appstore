@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schemas.runtipi.io/v2/app-info.json",
+  "name": "Home Assistant",
+  "min_tipi_version": "4.5.0",
+  "port": 8326,
+  "tipi_version": 1,
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "seafile",
+  "version": "13.0.12",
+  "categories": ["data"],
+  "description": " Seafile is an open source file sync&share solution designed for high reliability, performance and productivity.\n  Sync, share and collaborate across devices and teams. Build your team's knowledge base with Seafile's built-in Wiki feature.",
+  "short_desc": "Seafile is an open source file sync&share solution designed for high reliability, performance and productivity.",
+  "author": "Seafile",
+  "source": "https://github.com/haiwen/seafile",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "SEAFILE_DB_PASSWORD",
+      "min": 32,
+      "env_variable": "SEAFILE_DB_PASSWORD"
+    },
+    {
+      "type": "random",
+      "label": "JWT_PRIVATE_KEY",
+      "min": 32,
+      "env_variable": "JWT_PRIVATE_KEY"
+    },
+    {
+      "type": "email",
+      "label": "Seafile Admin Email",
+      "max": 50,
+      "min": 5,
+      "required": true,
+      "env_variable": "SEAFILE_ADMIN_EMAIL"
+    },
+    {
+      "type": "password",
+      "label": "Seafile Amin Password",
+      "max": 50,
+      "min": 8,
+      "required": true,
+      "env_variable": "SEAFILE_ADMIN_PASSWORD"
+    }
+  ],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1767413995996,
+  "updated_at": 1767413995996
+}
