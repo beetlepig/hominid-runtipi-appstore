@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schemas.runtipi.io/v2/app-info.json",
+  "name": "OpenCloud",
+  "min_tipi_version": "4.5.0",
+  "port": 9200,
+  "tipi_version": 1,
+  "available": true,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "opencloud",
+  "version": "4.0.1",
+  "categories": ["data"],
+  "description": "OpenCloud is an open-source project that gives you a secure and private way to store, access, and share your files.",
+  "short_desc": "OpenCloud is an open-source project that gives you a secure and private way to store, access, and share your files.",
+  "author": "opencloud-eu",
+  "source": "https://github.com/opencloud-eu/opencloud",
+  "form_fields": [],
+  "supported_architectures": ["arm64", "amd64"],
+  "created_at": 1767992682441,
+  "updated_at": 1767992682441
+}

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 2,
+  "$schema": "https://schemas.runtipi.io/v2/dynamic-compose.json",
+  "services": [
+    {
+      "name": "opencloud",
+      "image": "opencloudeu/opencloud:4.0.1",
+      "isMain": true,
+      "internalPort": "9200",
+      "command": ["-c", "opencloud init || true; opencloud server"],
+      "environment": [
+        {
+          "key": "OC_URL",
+          "value": "${APP_PROTOCOL}://${APP_DOMAIN}"
+        },
+        {
+          "key": "OC_LOG_LEVEL",
+          "value": "info"
+        },
+        {
+          "key": "OC_LOG_COLOR",
+          "value": "true"
+        },
+        {
+          "key": "OC_LOG_PRETTY",
+          "value": "true"
+        },
+        {
+          "key": "PROXY_TLS",
+          "value": "false"
+        },
+        {
+          "key": "OC_INSECURE",
+          "value": "false"
+        },
+        {
+          "key": "PROXY_ENABLE_BASIC_AUTH",
+          "value": "false"
+        },
+        {
+          "key": "IDM_CREATE_DEMO_USERS",
+          "value": "false"
+        },
+        {
+          "key": "IDM_ADMIN_PASSWORD",
+          "value": "tipi"
+        },
+        {
+          "key": "FRONTEND_ARCHIVER_MAX_SIZE",
+          "value": "10000000000"
+        },
+        {
+          "key": "FRONTEND_CHECK_FOR_UPDATES",
+          "value": "true"
+        },
+        {
+          "key": "PROXY_CSP_CONFIG_FILE_LOCATION",
+          "value": "/etc/opencloud/csp.yaml"
+        },
+        {
+          "key": "OC_PASSWORD_POLICY_BANNED_PASSWORDS_LIST",
+          "value": "banned-password-list.txt"
+        },
+        {
+          "key": "OC_SHARING_PUBLIC_SHARE_MUST_HAVE_PASSWORD",
+          "value": "true"
+        },
+        {
+          "key": "OC_SHARING_PUBLIC_WRITEABLE_SHARE_MUST_HAVE_PASSWORD",
+          "value": "false"
+        },
+        {
+          "key": "OC_PASSWORD_POLICY_DISABLED",
+          "value": "false"
+        },
+        {
+          "key": "OC_PASSWORD_POLICY_MIN_CHARACTERS",
+          "value": "8"
+        },
+        {
+          "key": "OC_PASSWORD_POLICY_MIN_LOWERCASE_CHARACTERS",
+          "value": "1"
+        },
+        {
+          "key": "OC_PASSWORD_POLICY_MIN_UPPERCASE_CHARACTERS",
+          "value": "1"
+        },
+        {
+          "key": "OC_PASSWORD_POLICY_MIN_DIGITS",
+          "value": "1"
+        },
+        {
+          "key": "OC_PASSWORD_POLICY_MIN_SPECIAL_CHARACTERS",
+          "value": "1"
+        },
+        {
+          "key": "PROXY_HTTP_ADDR",
+          "value": "0.0.0.0:9200"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/opencloud/config",
+          "containerPath": "/etc/opencloud",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/opencloud/data",
+          "containerPath": "/var/lib/opencloud",
+          "readOnly": false,
+          "shared": false,
+          "private": false
+        }
+      ],
+      "entrypoint": ["/bin/sh"],
+      "logging": {
+        "driver": "local"
+      },
+      "user": "1000:1000"
+    }
+  ]
+}
