@@ -4,8 +4,8 @@ OpenCloud is an open-source project that gives you a secure and private way to s
 
 **Benefits**
 
-| 🤝 **Collaboration**               | 🔒 **Data Privacy**              | ⚙️ **Simplicity**                          |
-|------------------------------------|----------------------------------|--------------------------------------------|
+| 🤝 **Collaboration**                                                               | 🔒 **Data Privacy**                                                                         | ⚙️ **Simplicity**                                                                                          |
+|------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
 | OpenCloud provides tools to help everyone work together, no matter where they are. | Your data stays with you, reducing the risk of unauthorized access or third-party breaches. | Minimize maintenance efforts while bringing the convenience of SaaS to your self-hosted cloud on-premises. |
 
 ## Features You’ll Love
@@ -30,4 +30,9 @@ A default administrator account is created during the initial setup.
 | Username | password |
 |:--------:|:--------:|
 | `admin`  |  `tipi`  |
+
 Change the default password or create a new admin and delete the original for security.
+
+### Local Domain
+
+If you encounter issues when logging in via a local domain, try enabling the **Insecure Client** option in the application settings.

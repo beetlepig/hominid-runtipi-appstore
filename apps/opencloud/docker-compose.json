@@ -31,7 +31,7 @@
         },
         {
           "key": "OC_INSECURE",
-          "value": "false"
+          "value": "${OC_INSECURE}"
         },
         {
           "key": "PROXY_ENABLE_BASIC_AUTH",

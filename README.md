@@ -5,8 +5,9 @@ This is my personal Runtipi app store. It includes applications that I use on a 
 
 ## Apps available (1)
 
-|                                App                                 | Name                                                                         | Description                                                                                                                                                                             |
-|:------------------------------------------------------------------:| ---------------------------------------------------------------------------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|    <img src="apps/homeassistant/metadata/logo.jpg" width="32">     | [Home Assistant](https://github.com/home-assistant/core)                     | Open-source home automation that puts local control and privacy first, with a **Matter server** and **auto-discovery** included, and support for exposing the app through a **domain**. |
+|                             App                             | Name                                                     | Description                                                                                                                                                                             |
+|:-----------------------------------------------------------:|----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <img src="apps/homeassistant/metadata/logo.jpg" width="32"> | [Home Assistant](https://github.com/home-assistant/core) | Open-source home automation that puts local control and privacy first, with a **Matter server** and **auto-discovery** included, and support for exposing the app through a **domain**. |
+|   <img src="apps/opencloud/metadata/logo.jpg" width="32">   | [OpenCloud](https://opencloud.eu)                        | OpenCloud is an open-source project that gives you a secure and private way to **store**, **access**, and **share** your **files**.                                                     |
 
 

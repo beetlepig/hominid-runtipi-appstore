@@ -3,7 +3,7 @@
   "name": "OpenCloud",
   "min_tipi_version": "4.5.0",
   "port": 9200,
-  "tipi_version": 1,
+  "tipi_version": 2,
   "available": true,
   "exposable": true,
   "dynamic_config": true,
@@ -11,11 +11,19 @@
   "version": "4.0.1",
   "categories": ["data"],
   "description": "OpenCloud is an open-source project that gives you a secure and private way to store, access, and share your files.",
-  "short_desc": "OpenCloud is an open-source project that gives you a secure and private way to store, access, and share your files.",
+  "short_desc": "Store, access, and share your files.",
   "author": "opencloud-eu",
   "source": "https://github.com/opencloud-eu/opencloud",
-  "form_fields": [],
+  "form_fields": [
+    {
+      "type": "boolean",
+      "label": "Insecure Client",
+      "default": false,
+      "required": false,
+      "env_variable": "OC_INSECURE"
+    }
+  ],
   "supported_architectures": ["arm64", "amd64"],
   "created_at": 1767992682441,
-  "updated_at": 1767992682441
+  "updated_at": 1768670084850
 }
