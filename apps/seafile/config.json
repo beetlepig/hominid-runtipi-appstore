@@ -3,15 +3,15 @@
   "name": "Seafile",
   "min_tipi_version": "4.5.0",
   "port": 8326,
-  "tipi_version": 3,
+  "tipi_version": 4,
   "available": true,
   "exposable": true,
   "dynamic_config": true,
   "id": "seafile",
-  "version": "13.0.12",
+  "version": "13.0.15",
   "categories": ["data"],
-  "description": " Seafile is an open source file sync&share solution designed for high reliability, performance and productivity.\n  Sync, share and collaborate across devices and teams. Build your team's knowledge base with Seafile's built-in Wiki feature.",
-  "short_desc": "Seafile is an open source file sync&share solution designed for high reliability, performance and productivity.",
+  "description": "Seafile is an open source file sync&share solution designed for high reliability, performance and productivity.\n  Sync, share and collaborate across devices and teams. Build your team's knowledge base with Seafile's built-in Wiki feature.",
+  "short_desc": "File synchronization and sharing solution designed for high reliability and performance.",
   "author": "Seafile",
   "source": "https://github.com/haiwen/seafile",
   "form_fields": [
@@ -46,5 +46,5 @@
   ],
   "supported_architectures": ["arm64", "amd64"],
   "created_at": 1767413995996,
-  "updated_at": 1767449318916
+  "updated_at": 1769360105356
 }

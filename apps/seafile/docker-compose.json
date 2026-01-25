@@ -4,7 +4,7 @@
   "services": [
     {
       "name": "seafile",
-      "image": "seafileltd/seafile-mc:13.0.12",
+      "image": "seafileltd/seafile-mc:13.0.15",
       "isMain": true,
       "internalPort": "80",
       "volumes": [
