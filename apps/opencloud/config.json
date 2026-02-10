@@ -3,12 +3,12 @@
   "name": "OpenCloud",
   "min_tipi_version": "4.5.0",
   "port": 9200,
-  "tipi_version": 2,
+  "tipi_version": 3,
   "available": true,
   "exposable": true,
   "dynamic_config": true,
   "id": "opencloud",
-  "version": "4.0.1",
+  "version": "5.0.2",
   "categories": ["data"],
   "description": "OpenCloud is an open-source project that gives you a secure and private way to store, access, and share your files.",
   "short_desc": "Store, access, and share your files.",
@@ -25,5 +25,5 @@
   ],
   "supported_architectures": ["arm64", "amd64"],
   "created_at": 1767992682441,
-  "updated_at": 1768670084850
+  "updated_at": 1770740742886
 }
