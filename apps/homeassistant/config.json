@@ -3,12 +3,12 @@
   "name": "Home Assistant",
   "min_tipi_version": "4.5.0",
   "port": 8123,
-  "tipi_version": 4,
+  "tipi_version": 5,
   "available": true,
   "exposable": true,
   "dynamic_config": true,
   "id": "homeassistant",
-  "version": "2026.2.1",
+  "version": "2026.5.4",
   "categories": ["automation"],
   "description": "Open source home automation that puts local control and privacy first. Powered by a worldwide community of tinkerers and DIY enthusiasts. Perfect to run on a Raspberry Pi or a local server.",
   "short_desc": "Open source home automation that puts local control and privacy first",
@@ -17,5 +17,5 @@
   "form_fields": [],
   "supported_architectures": ["arm64", "amd64"],
   "created_at": 1767314871903,
-  "updated_at": 1770740742886
+  "updated_at": 1779597438772
 }

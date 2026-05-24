@@ -4,7 +4,7 @@
   "services": [
     {
       "name": "opencloud",
-      "image": "opencloudeu/opencloud-rolling:5.0.2",
+      "image": "opencloudeu/opencloud-rolling:5.2.0",
       "isMain": true,
       "internalPort": "9200",
       "command": ["-c", "opencloud init || true; opencloud server"],
