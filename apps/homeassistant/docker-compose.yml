@@ -1,0 +1,48 @@
+services:
+  homeassistant:
+    image: 'ghcr.io/home-assistant/home-assistant:2026.8.3'
+    volumes:
+      - '${APP_DATA_DIR}/data/homeassistant/config:/config'
+      - '/etc/localtime:/etc/localtime:ro'
+      - '/run/dbus:/run/dbus:ro'
+    environment:
+      - 'TZ=${TZ}'
+    depends_on:
+      - 'ha-matter-server'
+    network_mode: 'host'
+    labels:
+      'traefik.enable': true
+      'traefik.http.middlewares.homeassistant-web-redirect.redirectscheme.scheme': 'https'
+      'traefik.http.services.homeassistant.loadbalancer.server.port': '8123'
+      'traefik.http.routers.homeassistant-insecure.rule': 'Host(`${APP_DOMAIN}`)'
+      'traefik.http.routers.homeassistant-insecure.entrypoints': 'web'
+      'traefik.http.routers.homeassistant-insecure.service': 'homeassistant'
+      'traefik.http.routers.homeassistant-insecure.middlewares': 'homeassistant-web-redirect'
+      'traefik.http.routers.homeassistant.rule': 'Host(`${APP_DOMAIN}`)'
+      'traefik.http.routers.homeassistant.entrypoints': 'websecure'
+      'traefik.http.routers.homeassistant.service': 'homeassistant'
+      'traefik.http.routers.homeassistant.tls.certresolver': 'myresolver'
+      'traefik.http.routers.homeassistant-local-insecure.rule': 'Host(`homeassistant.${LOCAL_DOMAIN}`)'
+      'traefik.http.routers.homeassistant-local-insecure.entrypoints': 'web'
+      'traefik.http.routers.homeassistant-local-insecure.service': 'homeassistant'
+      'traefik.http.routers.homeassistant-local-insecure.middlewares': 'homeassistant-web-redirect'
+      'traefik.http.routers.homeassistant-local.rule': 'Host(`homeassistant.${LOCAL_DOMAIN}`)'
+      'traefik.http.routers.homeassistant-local.entrypoints': 'websecure'
+      'traefik.http.routers.homeassistant-local.service': 'homeassistant'
+      'traefik.http.routers.homeassistant-local.tls': true
+    cap_add:
+      - 'NET_ADMIN'
+      - 'NET_RAW'
+    x-runtipi:
+      internal_port: 8123
+      is_main: true
+  ha-matter-server:
+    image: 'ghcr.io/matter-js/matterjs-server:1.4.0'
+    volumes:
+      - '/run/dbus:/run/dbus:ro'
+      - '${APP_DATA_DIR}/data/matter:/data'
+    network_mode: 'host'
+    x-runtipi:
+      is_main: false
+x-runtipi:
+  schema_version: 2
